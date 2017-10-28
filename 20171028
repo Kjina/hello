@@ -1,0 +1,76 @@
+디비를 설치했다?  큰 공유폴더를 하나 만든거!
+이제 엑셀을 이용해서 데이터를 작성할꺼야.
+근데 엑셀이 많아... 구분이 필요해! 상위폴더를 이용해 구분하자.
+
+엑셀 --> 테이블  상위폴더 --> DB
+
+데이터베이스 생성
+CREATE DATABASE '데이터베이스명'
+
+메타데이터를 명시해준다 (프로퍼티!!)
+
+varchar(100)  >>  2바이트만 들어면 98을 죽여버린다
+char(100) >> 2바이트만 들어오면 죽이는거 없이 2바이트를 저장한다.
+
+
+키값은 스트링이 없다!!! 속도 (스트링 < Int)
+그래서 아이디 값을 키값으로 두지 않는다.
+
+select * from user_info where userName in ('홍길동', 'Koon');
+
+>> SAME AS <<  select * from user_info where userName in ('홍길동', 'Koon');
+
+다른테이블 같은 칼럼 ... 구분을 짓기위해 별칭(as)를 사용한다
+
+테이블이 10개... 테이블도 별칭이 가능하다.
+
+서브쿼리를 잘 사용한다면...
+
+select uh.*,
+(select username from user_info as ui where ui.userno = uh.userno) as uuuu
+ from user_his as uh;
+
+조인(inner, outer)을 모두 서브쿼리로 표현할 수 있다?
+그럼 어떤것을 사용해야하지? 상황에따라 다른가?
+
+데이터베이스는 본인이 스킬업을 할 필요가 있다.
+
+트렌젝션
+
+수정하고있으면..... warn! 누가누가 수정하고 있습니다.
+
+
+내가 작업한 내용을 가지고 있어. 근데 공유하고 싶어? commit
+그냥 취소할래! rollback
+
+
+뷰? 뷰를 사용하는이유
+1. 테이블의 구조를 들키지 않으려고 뷰에 셀렉트 기능만 줄것이야
+
+2.create view v_user_info_his as
+select ui.*, uh.userdata from 
+user_info as ui, user_his as uh
+where ui.userno = uh.userno
+
+
+select * from v_user_info_his;
+
+4줄이 한줄로?
+
+3.내가 원하는 데이터로 조합을 하려고
+
+
+
+
+
+
+두 글자 이상 검색해주세요 ---> 한 글자 검색을 허용해놓으면 퍼포먼스가 현저하게 떨어진다.!!!
+
+SELECT * FROM USER_INFO
+WHERE USERNAME LIKE '%테스트%';
+
+SELECT * FROM USER_INFO
+WHERE USERNAME LIKE '%테%';
+
+LIKE ---> 가장 많이 쓰인다아아아아
+
